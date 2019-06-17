@@ -29,10 +29,10 @@ namespace Api.Helpers
 
         }
 
-        public void OnResourceExecuting(ResourceExecutingContext context)
+       public void OnResourceExecuting(ResourceExecutingContext context)
         {
 
-            var user = context.HttpContext.RequestServices.GetService<LoggedUser>();
+            var user = context.HttpContext.RequestServices.GetService<LoggedUserDto>();
 
 
             if (!user.IsLogged)
