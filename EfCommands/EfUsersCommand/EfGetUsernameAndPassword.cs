@@ -26,8 +26,7 @@ namespace EfCommands.EfUsersCommand
 
             return new EmailAndPassword
             {
-                Username = loggeduser.UserName,
-                Password = loggeduser.Password
+               
             };
         }
     }
