@@ -62,7 +62,7 @@ namespace Api
             services.AddTransient<IEditUserCommand, EfEditUserCommand>();
             services.AddTransient<IGetUserCommand, EfGetUserCommand>();
             services.AddTransient<IDeleteUserCommand, EfDeleteUserCommand>();
-            services.AddTransient<GetUsernameAndPassword, EfGetUsernameAndPassword>();
+            services.AddTransient<ILoginUserCommand, EfLoginUserCommand>();
 
             //categories
             services.AddTransient<IGetCategoriesCommand, EfGetCategoriesCommand>();
@@ -139,6 +139,8 @@ namespace Api
             services.AddSingleton(enc);
 
 
+           
+
             services.AddTransient(s =>
             {
                 var http = s.GetRequiredService<IHttpContextAccessor>();
@@ -150,13 +152,13 @@ namespace Api
                     var decodedString = encription.DecryptString(value);
                     decodedString = decodedString.Substring(0, decodedString.LastIndexOf("}") + 1);
 
-                    var user=  JsonConvert.DeserializeObject<LoggedUser>(decodedString);
+                    var user=  JsonConvert.DeserializeObject<LoggedUserDto>(decodedString);
                     user.IsLogged = true;
                     return user;
                 }
                 catch(Exception)
                 {
-                    return new LoggedUser {
+                    return new LoggedUserDto {
                         IsLogged = false
                     };
                 }
