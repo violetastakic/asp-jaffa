@@ -24,10 +24,6 @@ namespace EfCommands.EfUsersCommand
             var loggeduser = context.Users.Find(request);
 
 
-            return new EmailAndPassword
-            {
-               
-            };
         }
     }
 }
