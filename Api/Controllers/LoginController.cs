@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Helpers;
 using Aplication;
 using Aplication.Commands.UserCommands;
+using Aplication.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
