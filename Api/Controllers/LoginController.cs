@@ -6,6 +6,7 @@ using Api.Helpers;
 using Aplication;
 using Aplication.Commands.UserCommands;
 using Aplication.Dto;
+using Aplication.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
