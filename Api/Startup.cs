@@ -8,6 +8,7 @@ using Aplication.Commands.PictureCommand;
 using Aplication.Commands.PostCommands;
 using Aplication.Commands.RoleCommands;
 using Aplication.Commands.UserCommands;
+using Aplication.Dto;
 using Aplication.Interfaces;
 using EfCommands.EfCategoriesCommand;
 using EfCommands.EfCommentsCommand;
