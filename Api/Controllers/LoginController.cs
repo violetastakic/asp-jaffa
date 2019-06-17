@@ -16,18 +16,15 @@ namespace Api.Controllers
     public class LoginController : ControllerBase
     {
 
-        private readonly Encryption _enc;
-        private readonly GetUsernameAndPassword _getUsernameAndPassword;
+         private readonly Encryption _enc;
+        private readonly ILoginUserCommand _iLogginUser;
 
-        public LoginController(Encryption enc, GetUsernameAndPassword getUsernameAndPassword) : this(enc)
-        {
-            _getUsernameAndPassword = getUsernameAndPassword;
-        }
-
-        public LoginController(Encryption enc)
+        public LoginController(Encryption enc, ILoginUserCommand iLogginUser)
         {
             _enc = enc;
+            _iLogginUser = iLogginUser;
         }
+
 
         /// <summary>
         /// Login
@@ -45,19 +42,28 @@ namespace Api.Controllers
         /// <response code="200">Return token</response>
 
         [HttpPost]
-        public ActionResult Post([FromBody] string username,string password)
+        public ActionResult Post([FromBody] LoggedUserDto dto )
         {
+            try
+            {
 
-            var user = new LoggedUser();
-      
+                var user = _iLogginUser.Execute(dto);
 
-            _getUsernameAndPassword.Execute(user);
 
-            var stringObject = JsonConvert.SerializeObject(user);
+                var stringObject = JsonConvert.SerializeObject(user);
 
-            var encrypted = _enc.EncryptString(stringObject);
+                var encrypted = _enc.EncryptString(stringObject);
 
-            return Ok(new { token=encrypted});
+                return Ok(new { token = encrypted });
+            }
+            catch(EntityNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e.Message);
+            }
 
         }
 
@@ -72,7 +78,7 @@ namespace Api.Controllers
             var decodedString = _enc.DecryptString(value);
             decodedString = decodedString.Substring(0, decodedString.LastIndexOf("}") + 1);
 
-            var user = JsonConvert.DeserializeObject<LoggedUser>(decodedString);
+            var user = JsonConvert.DeserializeObject<LoggedUserDto>(decodedString);
 
             return null;
         }
