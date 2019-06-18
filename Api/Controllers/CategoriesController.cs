@@ -77,8 +77,8 @@ namespace Api.Controllers
         /// <response code="200">Return category</response>
         /// <response code="404">Category not found</response>
         /// <response code="500">An error has occured</response>
-
-        [HttpGet("{id}")]
+        [LoggedIn]
+        [LoggedIn("Admin")]
         public ActionResult<CategoryDto> Get(int id)
         {
             try
@@ -118,6 +118,7 @@ namespace Api.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(409)]
         [ProducesResponseType(500)]
+        [LoggedIn("Admin")]
         [HttpPost]
         public ActionResult<CategoryDto> Post([FromBody] CategoryDto dto)
         {
@@ -159,6 +160,7 @@ namespace Api.Controllers
         /// <response code="404">Category not found</response>
         /// <response code="409">Category already exists</response>
         /// <response code="500">An error has occured</response>
+        [LoggedIn("Admin")]
         [HttpPut("{id}")]
         public ActionResult<CategoryDto> Put(int id, [FromBody] CategoryDto dto)
         {
@@ -194,6 +196,7 @@ namespace Api.Controllers
         /// <response code="404">Category not found</response>
         /// <response code="500">An error has occured</response>
         /// <param name="id"></param>  
+        [LoggedIn("Admin")]
         [HttpDelete("{id}")]
         public ActionResult<CategoryDto> Delete(int id)
         {
